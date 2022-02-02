@@ -54,6 +54,11 @@ Since this contains following main files.
   
 
 ## How to use it?
+
+### If we want to start a server and wait for clients to join then 
+         MainActivity.server.StartServerAndListenForClients(IP_STRING,PORT_NUMBER);
+### If we want to join a server from client side then
+         MainActivity.client.connectToTheServer(IP_STRING, PORT_NUMBER);
 ### If you want to write from server to client then
          MainActivity.server.getOutPutStreamManager().WriteFromServerToClient(new MessageFromServerToClient(ANY_JSON_FORMATED_STRING));
          Note: not necessarly you need to pass a json but only string can be passes aswell.
@@ -61,11 +66,29 @@ Since this contains following main files.
          MainActivity.client.getOutPutStreamManager().WriteFromClientToServer(new MessageFromClientToServer(ANY_JSON_FORMATED_STRING));
          Note: not necessarly you need to pass a json but only string can be passes aswell. 
 ### If you want to get the response sent by server in client area then 
-    String response = MainActivity.client.getInputStreamManager().getResponseReceivedAtClient();
-    Note : run this code in a thread.
+         String response = MainActivity.client.getInputStreamManager().getResponseReceivedAtClient();
+         Note : run this code in a thread.
 ### If you want to get the response sent by client in server area then 
-  String response  =  MainActivity.server.getInputStreamManager().getResponseReceivedAtServer()
-  Note : run this code in a thread.
+        String response  =  MainActivity.server.getInputStreamManager().getResponseReceivedAtServer()
+        Note : run this code in a thread.
+
+### Some usefull code snippets.
+       - Getting list of devices.
+       WifiP2pManager.PeerListListener peerListListener = new WifiP2pManager.PeerListListener() {
+            @Override
+            public void onPeersAvailable(WifiP2pDeviceList wifiP2pDeviceList) {
+                    listOfDevices.clear();
+                    for (WifiP2pDevice device : wifiP2pDeviceList.getDeviceList()){
+                        listOfDevices.add(new DeviceInfoHolder(device));
+                    }
+                    //Set to list view
+                    Toast.makeText(mainActivity, "Number of devices available :"+listOfDevices.size(), Toast.LENGTH_SHORT).show();
+                    customAdapter_forListOfDevices = new CustomAdapter_ForListOfDevices(mainActivity,R.layout.device_list_item,listOfDevices);
+                    list_view_of_devices.setAdapter(customAdapter_forListOfDevices);
+            }
+        };
+        mainActivity.connectedDevicesManager.getTheListOfAllAvailableDevices(peerListListener);
+      - 
 
 
 

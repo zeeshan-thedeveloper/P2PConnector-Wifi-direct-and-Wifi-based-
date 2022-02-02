@@ -9,6 +9,12 @@ Following are the objectives
   - Can be used to create P2P files sharing app.
   - Can be used to create P2P local message app.
   - Can be used to create a simple socket communication between applications running on diffrent mobile phones.
+ 
+## How to import it?
+Downalod the repositroy and kee it into your java folder.
+
+![image](https://user-images.githubusercontent.com/66442918/152134408-a36781d5-c026-4c77-958d-f3ada0c6f7e5.png)
+
 
 ## Architecture 
 ![image](https://user-images.githubusercontent.com/66442918/152133894-381df3f3-7c03-4be9-9fc9-68b85b031124.png)
@@ -24,23 +30,42 @@ Since this contains following main files.
   - ipManager
     - it has following methods.
         - getAllAvailableIps() // returns  List< String >
-        - 
   - Server
     - it has following methods.
         - getOutPutStreamManager() // returns object of OutPutStreamManager
             -  By using this we can have access to following methods.
                 - WriteFromServerToClient(MessageFromServerToClient messageFromServerToClient) // for writing message from server to clients.
-                - WriteFromClientToServer(MessageFromClientToServer messageFromClientToServer) // for writing message form client to server.
         - getInputStreamManager() // returns object of InputStreamManager
-            - By using this we can have access to following methdos
+            - By using this we can have access to following methdods
+                - getResponseReceivedAtServer() // return response in string. this is response which a server get from client.
         - StartServerAndListenForClients(String ip,int port) // starts listening for clients.
         - 
   - Client
-
+    - it has following methods.
+        - connectToTheServer(String ip, int port) // for connecting the server.
+        - getOutPutStreamManager() // returns object of OutPutStreamManager
+            -  By using this we can have access to following methods.
+                - WriteFromClientToServer(MessageFromClientToServer messageFromClientToServer) // for writing message form client to server.
+        - getInputStreamManager() // returns object of InputStreamManager
+            - By using this we can have access to following methdods
+                - getResponseReceivedAtClient() // returns response in string. this is the response which a client get from server.
+       
   
-## How to import it?
-Downalod the repositroy and kee it into your java folder.
-
-![image](https://user-images.githubusercontent.com/66442918/152134408-a36781d5-c026-4c77-958d-f3ada0c6f7e5.png)
+  
 
 ## How to use it?
+### If you want to write from server to client then
+         MainActivity.server.getOutPutStreamManager().WriteFromServerToClient(new MessageFromServerToClient(ANY_JSON_FORMATED_STRING));
+         Note: not necessarly you need to pass a json but only string can be passes aswell.
+### If you want to write from cleint to server then
+         MainActivity.client.getOutPutStreamManager().WriteFromClientToServer(new MessageFromClientToServer(ANY_JSON_FORMATED_STRING));
+         Note: not necessarly you need to pass a json but only string can be passes aswell. 
+### If you want to get the response sent by server in client area then 
+    String response = MainActivity.client.getInputStreamManager().getResponseReceivedAtClient();
+    Note : run this code in a thread.
+### If you want to get the response sent by client in server area then 
+  String response  =  MainActivity.server.getInputStreamManager().getResponseReceivedAtServer()
+  Note : run this code in a thread.
+
+
+

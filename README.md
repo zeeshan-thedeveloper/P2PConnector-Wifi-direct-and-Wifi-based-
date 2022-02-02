@@ -90,5 +90,6 @@ Since this contains following main files.
         mainActivity.connectedDevicesManager.getTheListOfAllAvailableDevices(peerListListener);
       - 
 
+### Please copy paste the code from other files like manifest and broadcase listener.
 
 
